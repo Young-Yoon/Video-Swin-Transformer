@@ -13,7 +13,7 @@ from ..datasets import build_dataloader, build_dataset
 from ..utils import PreciseBNHook, get_root_logger
 from .test import multi_gpu_test
 from mmcv_custom.runner import EpochBasedRunnerAmp
-import apex
+# import apex
 import os.path as osp
 
 
@@ -90,6 +90,8 @@ def train_model(model,
         and cfg.optimizer_config["type"] == "DistOptimizerHook"
     ):
         if cfg.optimizer_config.get("use_fp16", False):
+            raise ImportError('apex.amp')
+            '''
             model, optimizer = apex.amp.initialize(
                 model.cuda(), optimizer, opt_level="O1"
             )
@@ -97,6 +99,7 @@ def train_model(model,
                 if hasattr(m, "fp16_enabled"):
                     m.fp16_enabled = True
             use_amp = True
+            '''
 
     # put model on gpus
     if distributed:
