@@ -10,6 +10,7 @@ drepo=Video-Swin-Transformer
 
 if false; then
 aws s3 ls
+fi
 
 echo prepare validation dataset and models
 [[ -e "$dpath" ]] || mkdir -p $dpath
@@ -20,7 +21,6 @@ rm $dpath/$dgz
 echo link dataset
 [[ -e "$dswin/$drepo/data" ]] || ln -s $dpath $dswin/$drepo/data
 ls -al $dswin/$drepo/data
-fi
 
 if [[ "${CONDA_DEFAULT_ENV}" != "mmlab" ]]; then   # "${CONDA_PREFIX##*/}"
 	# source $dconda/anaconda3/bin/activate mmlab
@@ -30,6 +30,8 @@ fi
 echo current conda env: "${CONDA_DEFAULT_ENV}"
 
 pushd $dswin/$drepo
+python setup.py develop
+
 for mdl in tiny small base; do
 	[[ "$mdl" == "base" ]] && trsz="1k 22k" || trsz="1k"
 	for tr in $trsz; do 
