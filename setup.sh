@@ -3,19 +3,22 @@
 if [ $1 == "mlp" ]; then
 	echo MLP
 	nvidia-smi
-	vcuda=11.0.3
-	vtorch=1.7.0+cu110
-	vvision=0.8.1+cu110
 	
 	echo MLP get-key
 	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B53DC80D13EDEF05
 
 	echo "MLP- libGL1"
 	sudo apt-get update && sudo apt-get install libgl1
-elif [ $1 == "t4" ]
-	vcuda=
-	vtorch=
-	vvision=
+fi
+
+if [ $1 == "m60" ]; then
+	vcuda=10.2.89
+	vtorch=1.8.1+cu102
+	vvision=0.9.1+cu102
+else
+	vcuda=11.0.3
+	vtorch=1.7.0+cu110
+	vvision=0.8.1+cu110
 fi
 
 
