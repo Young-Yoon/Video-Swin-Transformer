@@ -32,12 +32,10 @@ echo link dataset
 ls -al $dswin/$drepo/data
 fi
 
-if [ "$oconda" == "y" ]; then
-if [[ "${CONDA_DEFAULT_ENV}" != "mmlab" ]]; then   # "${CONDA_PREFIX##*/}"
+if [ "$oconda" == "y" ] || [[ "${CONDA_DEFAULT_ENV}" != "mmlab" ]]; then   # "${CONDA_PREFIX##*/}"
 	# source $dconda/anaconda3/bin/activate mmlab
 	source ${CONDA_EXE%/*}/activate mmlab
 	echo changed to conda env: ${CONDA_DEFAULT_ENV}
-fi
 fi
 
 echo current conda env: "${CONDA_DEFAULT_ENV}"
