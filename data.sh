@@ -1,12 +1,12 @@
 #!/bin/bash
 
 dhome="$HOME"
-dswin=$HOME/swin-data
-dconda=$HOME  # $dswin
+droot=$HOME/swin-data
+dconda=$HOME  # $droot
 dpath="$dhome/data"
 dname=kinetics400
 dgz=k400models.tar.gz
-drepo=Video-Swin-Transformer
+dsrc=Video-Swin-Transformer
 
 while getopts d:c: flag
 do
@@ -28,8 +28,8 @@ tar xvzf $dpath/$dgz -C $dpath/
 rm $dpath/$dgz
 
 echo link dataset
-[[ -e "$dswin/$drepo/data" ]] || ln -s $dpath $dswin/$drepo/data
-ls -al $dswin/$drepo/data
+[[ -e "$droot/$dsrc/data" ]] || ln -s $dpath $droot/$dsrc/data
+ls -al $droot/$dsrc/data
 fi
 
 if [ "$oconda" == "y" ] || [[ "${CONDA_DEFAULT_ENV}" != "mmlab" ]]; then   # "${CONDA_PREFIX##*/}"
@@ -39,7 +39,7 @@ if [ "$oconda" == "y" ] || [[ "${CONDA_DEFAULT_ENV}" != "mmlab" ]]; then   # "${
 fi
 
 echo current conda env: "${CONDA_DEFAULT_ENV}"
-pushd $dswin/$drepo
+pushd $droot/$dsrc
 
 ommact=`echo $(conda list | grep mmaction2 | wc -l) | sed -e 's/^[[:space:]]*//'`
 echo $ommact
@@ -56,7 +56,7 @@ python tools/test.py \
 done
 popd 
 
-pushd $dswin/$drepo
+pushd $droot/$dsrc
 mdl=base
 tr=1k
 python tools/train.py \
