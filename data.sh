@@ -1,7 +1,7 @@
 #!/bin/bash
 
 dhome="$HOME"
-droot=$HOME/swin-data
+droot=$HOME/dataroot
 dconda=$HOME  # $droot
 dpath="$dhome/data"
 dname=kinetics400
@@ -34,7 +34,9 @@ fi
 
 if [ "$oconda" == "y" ] || [[ "${CONDA_DEFAULT_ENV}" != "mmlab" ]]; then   # "${CONDA_PREFIX##*/}"
 	# source $dconda/anaconda3/bin/activate mmlab
-	source ${CONDA_EXE%/*}/activate mmlab
+	source ~/.bashrc
+	conda deactivate
+	conda activate mmlab
 	echo changed to conda env: ${CONDA_DEFAULT_ENV}
 fi
 
@@ -45,7 +47,7 @@ ommact=`echo $(conda list | grep mmaction2 | wc -l) | sed -e 's/^[[:space:]]*//'
 echo $ommact
 [[ "$ommact" != "1" ]] && python setup.py develop
 
-for mdl in tiny small base; do
+for mdl in tiny ; do # small base; do
 	[[ "$mdl" == "base" ]] && trsz="1k 22k" || trsz="1k"
 	for tr in $trsz; do 
 python tools/test.py \
