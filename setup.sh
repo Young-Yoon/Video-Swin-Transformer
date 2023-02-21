@@ -1,24 +1,27 @@
 #!/bin/bash
 
-usage() { echo "Usage: $0 [-t <0|1|2>] [-m <gpu>] [ -a(ws) | -c(onda) | -e(nv) | -l(ab) | -p(ytorch) ]" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [-l <0|1|2>] [-m <gpu>] [ -t a(ws)|c(onda)|e(nv)|l(ab)|p(ytorch) ]" 1>&2; exit 1; }
 
 device=mlp
 taws=0 && tconda=0 && tenv=0 && tmmlab=0 && tpytorch=0
 task=1
-while getopts t:m:a:c:e:l:p: flag
+while getopts l:m:t: flag
 do
   case "${flag}" in
-    t) task=${OPTARG};;    # decimal int
+    l) task=${OPTARG};;    # decimal int
     m) device=${OPTARG};;    # mlp | m60 | t4 | a10
-    a) taws=2;;
-    c) tconda=2;;
-    e) tenv=2;;
-    l) tmmlab=2;;
-    p) tpytorch=2;;
+    t) taskarg=${OPTARG};; 
     *) echo invalid option && usage;;
   esac
 done
-echo install level: "$task", device: "$device"
+
+[[ "$taskarg" == *"a"* ]] && taws=2
+[[ "$taskarg" == *"c"* ]] && tconda=2
+[[ "$taskarg" == *"e"* ]] && tenv=2
+[[ "$taskarg" == *"l"* ]] && tmmlab=2
+[[ "$taskarg" == *"p"* ]] && tpytorch=2
+
+echo install level: "$task", device: "$device", aws$taws, conda$tconda, env$tenv, mmlab$tmmlab, pytorch$tpytorch
 
 if [ "$device" == "mlp" ]; then
   echo MLP
@@ -53,9 +56,9 @@ f=Anaconda3-2022.10-Linux-x86_64.sh
 bash $f  # NOT sudo
 rm $f
 fi
-exit 1
 
 if [ $tenv -ge "$task" ]; then
+source ~/.bashrc
 if [ -z ${CONDA_EXE+x} ]; then echo conda required && exit 1; fi
 echo conda_exe: ${CONDA_EXE%/*}
 source "${CONDA_EXE%/*}/activate"
