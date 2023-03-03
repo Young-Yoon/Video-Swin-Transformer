@@ -81,14 +81,14 @@ echo current conda env: ${CONDA_DEFAULT_ENV}
 
 if [ $tpytorch -ge "$task" ]; then
 echo cuda:$vcuda / torch:$vtorch / torchvision:$vvision
-conda install pytorch-gpu cudatoolkit="$vcuda" -c conda-forge  # pytorch-gpu-1.11.0 | cudnn-8.2.1.32
-conda install pillow=6.1 -c pytorch
+conda install pytorch-gpu cudatoolkit="$vcuda" -c conda-forge -y  # pytorch-gpu-1.11.0 | cudnn-8.2.1.32
+conda install pillow=6.1 -c pytorch -y 
 pip install torch=="$vtorch" torchvision=="$vvision" -f https://download.pytorch.org/whl/torch_stable.html
 fi
 
 if true; then
 echo nvidia apex
-conda install -c "conda-forge/label/cf202003" nvidia-apex
+conda install -c "conda-forge/label/cf202003" nvidia-apex -y
 
 echo pip upgrade
 python -mpip install -U pip && python -mpip install -U matplotlib && pip install --upgrade setuptools
@@ -96,8 +96,8 @@ python -mpip install -U pip && python -mpip install -U matplotlib && pip install
 echo open-mmlab
 pip install mmcv==1.4.0 timm scipy
 
-pushd ~/data || exit 1
-git clone https://github.com/SwinTransformer/Video-Swin-Transformer 
+pushd ~/dataroot || exit 1
+[[ -d Video-Swin-Transformer ]] || git clone https://github.com/SwinTransformer/Video-Swin-Transformer 
 pushd Video-Swin-Transformer || exit 1
 python setup.py develop
 popd

@@ -16,9 +16,7 @@ do
     esac
 done
 
-if false; then
-aws s3 ls
-fi
+aws s3 ls || exit 1
 
 if [ "$odata" == "y" ]; then
 echo prepare validation dataset and models
