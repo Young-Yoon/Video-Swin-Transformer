@@ -1,0 +1,12 @@
+2023-03-05 04:57:37,277 - mmaction - INFO - load checkpoint from local path: data/kinetics400/models/swin_small_patch244_window877_kinetics400_1k.pth
+2023-03-05 04:57:37,460 - mmaction - WARNING - The model and loaded state dict do not match exactly
+size mismatch for cls_head.fc_cls.weight: copying a param with shape torch.Size([400, 768]) from checkpoint, the shape in current model is torch.Size([7, 768]).
+size mismatch for cls_head.fc_cls.bias: copying a param with shape torch.Size([400]) from checkpoint, the shape in current model is torch.Size([7]).
+2023-03-05 04:57:37,462 - mmaction - INFO - workflow: [('train', 1)], max: 30 epochs
+2023-03-05 04:57:37,463 - mmaction - INFO - Checkpoints will be saved to /home/ylee/dataroot/work_dirs/xdviolence_swin_small_patch244_window877.py by HardDiskBackend.
+/home/ylee/anaconda3/envs/mmlab/lib/python3.7/site-packages/mmcv/runner/hooks/evaluation.py:222: UserWarning: runner.meta is None. Creating an empty one.
+  warnings.warn('runner.meta is None. Creating an empty one.')
+2023-03-05 04:58:24,007 - mmaction - INFO - Epoch [1][200/3953] lr: 1.477e-06, eta: 7:39:08, time: 0.233, data_time: 0.013, memory: 7120, top1_acc: 0.1600, top5_acc: 0.7100, loss_cls: 1.9424, loss: 1.9424
+2023-03-05 05:11:28,624 - mmaction - INFO - Epoch [1][3800/3953]        lr: 5.575e-06, eta: 6:58:26, time: 0.223, data_time: 0.001, memory: 7122, top1_acc: 0.6700, top5_acc: 0.9800, loss_cls: 1.0331, loss: 1.0331
+2023-03-05 05:25:46,451 - mmaction - INFO - Epoch [2][3800/3953]        lr: 1.005e-05, eta: 6:34:40, time: 0.213, data_time: 0.001, memory: 7122, top1_acc: 0.6950, top5_acc: 0.9800, loss_cls: 0.9227, loss: 0.9227
+
