@@ -9,4 +9,64 @@ size mismatch for cls_head.fc_cls.bias: copying a param with shape torch.Size([4
 2023-03-05 04:58:24,007 - mmaction - INFO - Epoch [1][200/3953] lr: 1.477e-06, eta: 7:39:08, time: 0.233, data_time: 0.013, memory: 7120, top1_acc: 0.1600, top5_acc: 0.7100, loss_cls: 1.9424, loss: 1.9424
 2023-03-05 05:11:28,624 - mmaction - INFO - Epoch [1][3800/3953]        lr: 5.575e-06, eta: 6:58:26, time: 0.223, data_time: 0.001, memory: 7122, top1_acc: 0.6700, top5_acc: 0.9800, loss_cls: 1.0331, loss: 1.0331
 2023-03-05 05:25:46,451 - mmaction - INFO - Epoch [2][3800/3953]        lr: 1.005e-05, eta: 6:34:40, time: 0.213, data_time: 0.001, memory: 7122, top1_acc: 0.6950, top5_acc: 0.9800, loss_cls: 0.9227, loss: 0.9227
+2023-03-05 05:39:59,981 - mmaction - INFO - Epoch [3][3800/3953]        lr: 1.236e-05, eta: 6:16:57, time: 0.214, data_time: 0.001, memory: 7122, top1_acc: 0.7950, top5_acc: 0.9850, loss_cls: 0.7262, loss: 0.7262
+2023-03-05 05:54:15,218 - mmaction - INFO - Epoch [4][3800/3953]        lr: 1.219e-05, eta: 6:01:11, time: 0.212, data_time: 0.000, memory: 7122, top1_acc: 0.7150, top5_acc: 0.9900, loss_cls: 0.8447, loss: 0.8447
+2023-03-05 06:08:30,784 - mmaction - INFO - Epoch [5][3800/3953]        lr: 1.196e-05, eta: 5:46:28, time: 0.214, data_time: 0.000, memory: 7124, top1_acc: 0.7650, top5_acc: 1.0000, loss_cls: 0.6702, loss: 0.6702
+[>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>] 800/800, 4.3 task/s, elapsed: 187s, ETA:     0s
+2023-03-05 06:12:11,886 - mmaction - INFO - Now best checkpoint is saved as best_top1_acc_epoch_5.pth.
+2023-03-05 06:12:11,888 - mmaction - INFO - Epoch(val) [5][800] top1_acc: 0.7600, top5_acc: 0.9925, mean_class_accuracy: 0.6018
+2023-03-05 06:25:56,737 - mmaction - INFO - Epoch [6][3800/3953]        lr: 1.166e-05, eta: 5:32:16, time: 0.213, data_time: 0.001, memory: 7124, top1_acc: 0.7850, top5_acc: 0.9900, loss_cls: 0.6088, loss: 0.6088
+2023-03-05 06:40:13,013 - mmaction - INFO - Epoch [7][3800/3953]        lr: 1.131e-05, eta: 5:18:07, time: 0.215, data_time: 0.001, memory: 7124, top1_acc: 0.7350, top5_acc: 0.9900, loss_cls: 0.8038, loss: 0.8038
+2023-03-05 06:54:28,129 - mmaction - INFO - Epoch [8][3800/3953]        lr: 1.089e-05, eta: 5:04:01, time: 0.212, data_time: 0.000, memory: 7124, top1_acc: 0.7600, top5_acc: 0.9950, loss_cls: 0.6711, loss: 0.6711
+2023-03-05 07:08:44,279 - mmaction - INFO - Epoch [9][3800/3953]        lr: 1.043e-05, eta: 4:50:03, time: 0.230, data_time: 0.018, memory: 7124, top1_acc: 0.7500, top5_acc: 0.9900, loss_cls: 0.6426, loss: 0.6426
+2023-03-05 07:22:58,708 - mmaction - INFO - Epoch [10][3800/3953]       lr: 9.924e-06, eta: 4:36:05, time: 0.211, data_time: 0.000, memory: 7124, top1_acc: 0.7800, top5_acc: 0.9950, loss_cls: 0.6367, loss: 0.6367
+2023-03-05 07:26:36,451 - mmaction - INFO - The previous best checkpoint /home/ylee/dataroot/work_dirs/xdviolence_swin_small_patch244_window877.py/best_top1_acc_epoch_5.pth was removed
+2023-03-05 07:26:37,465 - mmaction - INFO - Now best checkpoint is saved as best_top1_acc_epoch_10.pth.
+2023-03-05 07:26:37,467 - mmaction - INFO - Epoch(val) [10][800]        top1_acc: 0.7900, top5_acc: 0.9888, mean_class_accuracy: 0.6368
 
+{"mode": "train", "epoch": 11, "iter": 3800, "lr": 1e-05, "memory": 7124, "data_time": 0.00015, "top1_acc": 0.82, "top5_acc": 1.0, "loss_cls": 0.45872, "loss": 0.45872, "time": 0.21563}
+{"mode": "train", "epoch": 12, "iter": 3800, "lr": 1e-05, "memory": 7124, "data_time": 0.00014, "top1_acc": 0.825, "top5_acc": 1.0, "loss_cls": 0.49049, "loss": 0.49049, "time": 0.2127}
+{"mode": "train", "epoch": 13, "iter": 3800, "lr": 1e-05, "memory": 7124, "data_time": 0.00014, "top1_acc": 0.77, "top5_acc": 0.985, "loss_cls": 0.69846, "loss": 0.69846, "time": 0.21454}
+{"mode": "train", "epoch": 14, "iter": 3800, "lr": 1e-05, "memory": 7124, "data_time": 0.00388, "top1_acc": 0.795, "top5_acc": 0.99, "loss_cls": 0.61934, "loss": 0.61934, "time": 0.22015}
+{"mode": "train", "epoch": 15, "iter": 3800, "lr": 1e-05, "memory": 7124, "data_time": 0.00058, "top1_acc": 0.775, "top5_acc": 0.98, "loss_cls": 0.70629, "loss": 0.70629, "time": 0.21441}
+{"mode": "train", "epoch": 16, "iter": 3800, "lr": 1e-05, "memory": 7124, "data_time": 0.00157, "top1_acc": 0.785, "top5_acc": 1.0, "loss_cls": 0.56783, "loss": 0.56783, "time": 0.21645}
+{"mode": "train", "epoch": 17, "iter": 3800, "lr": 1e-05, "memory": 7124, "data_time": 0.00014, "top1_acc": 0.825, "top5_acc": 1.0, "loss_cls": 0.59037, "loss": 0.59037, "time": 0.21296}
+{"mode": "train", "epoch": 18, "iter": 3800, "lr": 0.0, "memory": 7124, "data_time": 0.00014, "top1_acc": 0.825, "top5_acc": 0.99, "loss_cls": 0.55769, "loss": 0.55769, "time": 0.2152}
+{"mode": "train", "epoch": 19, "iter": 3800, "lr": 0.0, "memory": 7124, "data_time": 0.0085, "top1_acc": 0.81, "top5_acc": 0.995, "loss_cls": 0.54739, "loss": 0.54739, "time": 0.22273}
+{"mode": "train", "epoch": 20, "iter": 3800, "lr": 0.0, "memory": 7124, "data_time": 0.00014, "top1_acc": 0.745, "top5_acc": 0.995, "loss_cls": 0.7099, "loss": 0.7099, "time": 0.21215}
+{"mode": "train", "epoch": 21, "iter": 3800, "lr": 0.0, "memory": 7124, "data_time": 0.00014, "top1_acc": 0.805, "top5_acc": 0.995, "loss_cls": 0.5404, "loss": 0.5404, "time": 0.21432}
+{"mode": "train", "epoch": 22, "iter": 3800, "lr": 0.0, "memory": 7124, "data_time": 0.00014, "top1_acc": 0.815, "top5_acc": 0.995, "loss_cls": 0.59054, "loss": 0.59054, "time": 0.21753}
+{"mode": "train", "epoch": 23, "iter": 3800, "lr": 0.0, "memory": 7124, "data_time": 0.00267, "top1_acc": 0.765, "top5_acc": 1.0, "loss_cls": 0.58646, "loss": 0.58646, "time": 0.22041}
+{"mode": "train", "epoch": 24, "iter": 3800, "lr": 0.0, "memory": 7124, "data_time": 0.00016, "top1_acc": 0.83, "top5_acc": 0.995, "loss_cls": 0.46935, "loss": 0.46935, "time": 0.21657}
+{"mode": "train", "epoch": 25, "iter": 3800, "lr": 0.0, "memory": 7124, "data_time": 0.00014, "top1_acc": 0.8, "top5_acc": 0.99, "loss_cls": 0.56066, "loss": 0.56066, "time": 0.21497}
+{"mode": "train", "epoch": 26, "iter": 3800, "lr": 0.0, "memory": 7124, "data_time": 0.00014, "top1_acc": 0.815, "top5_acc": 0.995, "loss_cls": 0.53545, "loss": 0.53545, "time": 0.21562}
+{"mode": "train", "epoch": 27, "iter": 3800, "lr": 0.0, "memory": 7124, "data_time": 0.00014, "top1_acc": 0.825, "top5_acc": 0.995, "loss_cls": 0.52139, "loss": 0.52139, "time": 0.21491}
+{"mode": "train", "epoch": 28, "iter": 3800, "lr": 0.0, "memory": 7124, "data_time": 0.00487, "top1_acc": 0.825, "top5_acc": 0.995, "loss_cls": 0.53844, "loss": 0.53844, "time": 0.21913}
+{"mode": "train", "epoch": 29, "iter": 3800, "lr": 0.0, "memory": 7124, "data_time": 0.00013, "top1_acc": 0.845, "top5_acc": 0.995, "loss_cls": 0.47174, "loss": 0.47174, "time": 0.21532}
+{"mode": "train", "epoch": 30, "iter": 3800, "lr": 0.0, "memory": 7124, "data_time": 0.00014, "top1_acc": 0.83, "top5_acc": 0.995, "loss_cls": 0.49184, "loss": 0.49184, "time": 0.21571}
+{"mode": "val", "epoch": 5, "iter": 800, "lr": 1e-05, "top1_acc": 0.76, "top5_acc": 0.9925, "mean_class_accuracy": 0.60178}
+{"mode": "val", "epoch": 10, "iter": 800, "lr": 1e-05, "top1_acc": 0.79, "top5_acc": 0.98875, "mean_class_accuracy": 0.63679}
+{"mode": "val", "epoch": 15, "iter": 800, "lr": 1e-05, "top1_acc": 0.80125, "top5_acc": 0.98875, "mean_class_accuracy": 0.65814}
+{"mode": "val", "epoch": 20, "iter": 800, "lr": 0.0, "top1_acc": 0.7825, "top5_acc": 0.98875, "mean_class_accuracy": 0.66109}
+{"mode": "val", "epoch": 25, "iter": 800, "lr": 0.0, "top1_acc": 0.795, "top5_acc": 0.98875, "mean_class_accuracy": 0.65003}
+{"mode": "val", "epoch": 30, "iter": 800, "lr": 0.0, "top1_acc": 0.795, "top5_acc": 0.98875, "mean_class_accuracy": 0.65151}
+
+
+load_from:  work_dirs/xdviolence_swin_small_patch244_window877_lr_8.py/epoch_20.pth
+load checkpoint from local path: work_dirs/xdviolence_swin_small_patch244_window877_lr_8.py/epoch_20.pth
+[>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>] 10/10, 1.1 task/s, elapsed: 9s, ETA:     0s
+ [array([0.5513935 , 0.05844885, 0.28345487, 0.0702586, 0.00501892, 0.02070156, 0.01072375], dtype=float32), 
+  array([0.8431834 , 0.01900207, 0.00521048, 0.03939332, 0.08627215,0.00139111, 0.00554752], dtype=float32), 
+  array([3.0730448e-03, 1.4730803e-03, 6.6022971e-04, 2.4267964e-02, 3.1518228e-03, 2.8971748e-05, 9.6734494e-01], dtype=float32), 
+  array([8.0608744e-03, 1.3462616e-02, 3.0263742e-03, 6.5940416e-01, 3.6538184e-02, 1.6277054e-04, 2.7934510e-01], dtype=float32), 
+  array([2.4597935e-01, 6.3465834e-03, 5.9302016e-03, 3.6387555e-02, 7.0242095e-01, 3.3652349e-04, 2.5988666e-03], dtype=float32), 
+  array([0.2339674 , 0.06457622, 0.01292216, 0.01631852, 0.66642356, 0.00132475, 0.00446745], dtype=float32), 
+  array([0.8084013 , 0.02174238, 0.09226015, 0.01147789, 0.06216928, 0.00294061, 0.00100847], dtype=float32), 
+  array([0.1354273 , 0.06176787, 0.00722596, 0.01977073, 0.7571544 , 0.00283626, 0.01581757], dtype=float32), 
+  array([1.0178566e-01, 2.6034411e-02, 6.2338205e-04, 2.7078189e-02, 8.1770027e-01, 1.3215392e-04, 2.6645973e-02], dtype=float32), 
+  array([9.9702781e-01, 1.5976806e-03, 4.7508624e-04, 3.6593457e-04, 2.3104250e-04, 7.2305571e-05, 2.3015696e-04], dtype=float32)]
+
+mean_acc        1.0000
+top1_acc: 1.0000
+top5_acc: 1.0000
+mean_class_accuracy: 1.0000

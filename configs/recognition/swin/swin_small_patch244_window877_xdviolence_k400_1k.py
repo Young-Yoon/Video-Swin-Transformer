@@ -7,9 +7,10 @@ model=dict(backbone=dict(patch_size=(2,4,4), drop_path_rate=0.1), test_cfg=dict(
 dataset_type = 'VideoDataset'
 data_root = 'data/xd-violence/train/'
 data_root_val = 'data/xd-violence/test/'
+data_root_test = 'data/xd-violence/test10/'
 ann_file_train = 'data/xd-violence/train.txt'
 ann_file_val = 'data/xd-violence/test.txt'
-ann_file_test = 'data/xd-violence/test.txt'
+ann_file_test = 'data/xd-violence/test10.txt'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_bgr=False)
 train_pipeline = [
@@ -83,7 +84,7 @@ data = dict(
     test=dict(
         type=dataset_type,
         ann_file=ann_file_test,
-        data_prefix=data_root_val,
+        data_prefix=data_root_test,
         pipeline=test_pipeline))
 evaluation = dict(
     interval=5, metrics=['top_k_accuracy', 'mean_class_accuracy'])
@@ -106,7 +107,7 @@ total_epochs = 30
 
 # runtime settings
 checkpoint_config = dict(interval=1)
-work_dir = '../work_dirs/xdviolence_swin_small_patch244_window877.py'
+work_dir = 'work_dirs/xdviolence_swin_small_patch244_window877.py'
 find_unused_parameters = False
 
 
