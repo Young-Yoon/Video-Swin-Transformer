@@ -7,7 +7,7 @@ model=dict(backbone=dict(patch_size=(2,4,4), drop_path_rate=0.1), test_cfg=dict(
 dataset_type = 'VideoDataset'
 data_root = 'data/xd-violence/train/'
 data_root_val = 'data/xd-violence/test/'
-data_root_test = 'data/xd-violence/test10/'
+data_root_test = 'data/xd-violence/test12/'
 ann_file_train = 'data/xd-violence/train.txt'
 ann_file_val = 'data/xd-violence/test.txt'
 ann_file_test = 'data/xd-violence/test10.txt'

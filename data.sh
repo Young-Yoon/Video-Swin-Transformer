@@ -5,7 +5,9 @@ droot=$HOME/dataroot
 dconda=$HOME  # $droot
 dpath="$dhome/data"
 dname=kinetics400
+dname2=xdviolence
 dgz=k400models.tar.gz
+dgz2=xdv_test12.tar.gz
 dsrc=Video-Swin-Transformer
 
 while getopts d:c: flag
@@ -23,7 +25,9 @@ echo prepare validation dataset and models
 [[ -e "$dpath" ]] || mkdir -p $dpath
 aws s3 cp s3://$dname/$dgz $dpath 
 tar xvzf $dpath/$dgz -C $dpath/
-rm $dpath/$dgz
+aws s3 cp s3://$dname2/$dgz2 $dpath
+tar xvzf $dpath/$dgz2 -C $dpath/$dname2/
+rm $dpath/$dgz $dpath/$dgz2
 
 echo link dataset
 [[ -e "$droot/$dsrc/data" ]] || ln -s $dpath $droot/$dsrc/data
