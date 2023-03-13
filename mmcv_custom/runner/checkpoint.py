@@ -1,5 +1,5 @@
 # Copyright (c) Open-MMLab. All rights reserved.
-import apex
+# import apex
 import os.path as osp
 import time
 from tempfile import TemporaryDirectory
@@ -50,7 +50,8 @@ def save_checkpoint(model, filename, optimizer=None, meta=None, amp=False):
 
     # save amp state dict in the checkpoint
     if amp:
-        checkpoint['amp'] = apex.amp.state_dict()
+        raise ImportError('apex.amp')
+        # checkpoint['amp'] = apex.amp.state_dict()
 
     if filename.startswith('pavi://'):
         try:
