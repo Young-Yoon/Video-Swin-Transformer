@@ -1,7 +1,7 @@
-FROM nvidia/cuda:11.0-cudnn8-devel-ubuntu16.04
+FROM public.ecr.aws/j1r0q0g6/notebooks/notebook-servers/jupyter-tensorflow-cuda-full:v1.3.0-rc.1
 
 # Labels for the docker
-LABEL description="This docker has pytorch 1.7.1 in python37 with cuda 11.0, and cudnn 8.0." \
+LABEL description="This mlp-notebook image has pytorch 1.7.1 in python37 with cuda 11.0.3, and cudnn 8.0." \
       tag="pytorch1.7.1-py37-cuda11.0-openmpi-mmcv-apex-timm" \
       creator="ninja" tooltype="pytorch" \
       tooltypeversion="1.7.1" \
@@ -19,38 +19,12 @@ ENV NCCL_DEBUG=INFO
 
 ENV HOROVOD_GPU_ALLREDUCE=NCCL
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libmlx4-1 \
-    libmlx5-1 \
-    librdmacm1 \
-    libibverbs1 \
-    libmthca1 \
-    libdapl2 \
-    dapl2-utils openssh-client \
-    openssh-server \
-    iproute2 && \
-    apt-get install -y \
-    build-essential \
-    bzip2 \
-    git \
-    wget \
-    unzip \
-    libjpeg-dev \
-    libpng-dev \
-    ca-certificates \
-    libopenblas-dev \
-    libopencv-dev \
-    libyaml-dev \
-    cpio && \
-    apt-get clean -y && \
-    rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+# libGL1
+RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/3bf863cc.pub &&\
+    apt-get update && apt-get install -y libgl1 awscli s3fs
 
-RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-
-RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
-    wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/anaconda.sh && \
-    sh ~/anaconda.sh -b -p /opt/conda && \
-    rm ~/anaconda.sh
+RUN conda install -y gcc_linux-64 && pip install ruamel.yaml
+RUN pip uninstall -y tensorflow-gpu tensorflow-estimator tensorflow-metadata kubernetes kfp kfp-server-api kfserving
 
 ENV PATH=/opt/conda/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 

@@ -9,13 +9,21 @@ on:
 env:
   COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
   REGISTRY: docker.artifactory.rbx.com
-  IMAGE_NAME: swin-docker
-  IMAGE_VERSION: 0.1.${{ github.run_number }}
+# IMAGE_NAME: swin-docker
   SRC_ROOT: .
 
 jobs:
   build:
     runs-on: [ self-hosted, generic-linux ]
+    strategy:
+      matrix:
+        cuda: [ 11.0 ]
+        target: [ docker, mlp-notebook ]
+        include:
+          - target: docker
+            image_name: swin-docker
+          - target: mlp_nb
+            image_name: swin-mlp-notebook
     steps:
       - name: Ensure a clean workspace
         uses: Roblox/cleanup-action@v1.0.1
@@ -39,8 +47,8 @@ jobs:
           push: true
           context: ${{ env.SRC_ROOT }}
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
-          file: ${{env.SRC_ROOT}}/docker/docker_11.0/Dockerfile
+            ${{ env.REGISTRY }}/${{ matrix.image_name }}:${{ matrix.cuda }}.${{ github.run_number }}
+          file: ${{env.SRC_ROOT}}/docker/${{ matrix.target }}_${{ matrix.cuda }}/Dockerfile
           build-args: |
             "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}"
             "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
