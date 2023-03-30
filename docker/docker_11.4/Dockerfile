@@ -1,7 +1,7 @@
-FROM nvidia/cuda:11.0.3-cudnn8-devel-ubuntu18.04
+FROM nvidia/cuda:11.0-cudnn8-devel-ubuntu16.04
 
 # Labels for the docker
-LABEL description="This docker has pytorch 1.7.1 in python37 with cuda 11.0.3, and cudnn 8.0." \
+LABEL description="This docker has pytorch 1.7.1 in python37 with cuda 11.0, and cudnn 8.0." \
       tag="pytorch1.7.1-py37-cuda11.0-openmpi-mmcv-apex-timm" \
       creator="ninja" tooltype="pytorch" \
       tooltypeversion="1.7.1" \

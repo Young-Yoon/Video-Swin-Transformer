@@ -1,0 +1,48 @@
+name: swin-docker
+
+on:
+  push: 
+    branches:
+      - docker-setup
+#on: [workflow_dispatch]
+
+env:
+  COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+  REGISTRY: docker.artifactory.rbx.com
+  IMAGE_NAME: swin-docker
+  IMAGE_VERSION: 0.1.${{ github.run_number }}
+  SRC_ROOT: .
+
+jobs:
+  build:
+    runs-on: [ self-hosted, generic-linux ]
+    steps:
+      - name: Ensure a clean workspace
+        uses: Roblox/cleanup-action@v1.0.1
+
+      - name: Check out code
+        uses: actions/checkout@v1
+
+      - name: Docker login
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.ROBLOX_ARTIFACTORY_CI_PUBLISH_USERNAME }}
+          password: ${{ secrets.ROBLOX_ARTIFACTORY_CI_PUBLISH_BEARER_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push docker image
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: ${{ env.SRC_ROOT }}
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+          file: ${{env.SRC_ROOT}}/docker/docker_11.0/Dockerfile
+          build-args: |
+            "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}"
+            "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+
+
