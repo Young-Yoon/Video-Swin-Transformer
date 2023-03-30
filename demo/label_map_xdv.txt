@@ -1,0 +1,7 @@
+A0: normal
+B1: Fighting
+B2: Shooting
+G3: Explosion
+B4: Rice
+B5: Abuse
+B6: Car accident
