@@ -91,7 +91,7 @@ echo nvidia apex
 conda install -c "conda-forge/label/cf202003" nvidia-apex -y
 
 echo pip upgrade
-python -mpip install -U pip && python -mpip install -U matplotlib && pip install --upgrade setuptools
+python -m pip install -U pip && python -m pip install -U matplotlib && pip install --upgrade setuptools
 
 echo open-mmlab
 pip install mmcv==1.4.0 timm scipy
