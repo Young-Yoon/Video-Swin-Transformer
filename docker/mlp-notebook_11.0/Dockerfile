@@ -20,18 +20,17 @@ RUN pip uninstall -y tensorflow-gpu tensorflow-estimator tensorflow-metadata kub
 ARG USER_NAME=jovyan
 USER $USER_NAME
 
-RUN conda install -y python=3.7
-ENV ACTIVATE="/opt/conda/bin/activate"
-#RUN echo "conda deactivate && conda activate $ENV_NAME" >> /home/$USER_NAME/.bashrc
+ARG ENV_NAME=mmlab
+RUN conda create -n $ENV_NAME -y python=3.7
+ENV CONDABIN="/opt/conda/bin"
+ENV CONDAENV="/opt/conda/envs/$ENV_NAME/bin"
+#ENV ACTIVATE="$CONDABIN/activate $ENV_NAME"
+RUN echo "conda deactivate && conda activate $ENV_NAME" >> /home/$USER_NAME/.bashrc
 
-RUN conda install -y -c pytorch pytorch==1.7.0 torchvision==0.8.0 cudatoolkit=11.0 pillow=6.1
-RUN conda install -y -c "conda-forge/label/cf202003" nvidia-apex
-#RUN python -m pip install -U pip && python -m pip install -U matplotlib && pip install --upgrade setuptools
-RUN $ACTIVATE && pip install mmcv==1.4.0 timm scipy
-
+RUN conda install -n $ENV_NAME -y -c pytorch pytorch==1.7.0 torchvision==0.8.0 cudatoolkit=11.0 pillow=6.1
+RUN conda install -n $ENV_NAME -y -c "conda-forge/label/cf202003" nvidia-apex
+RUN conda install -n $ENV_NAME -y pip
+RUN $CONDAENV/python -m pip install -U pip && python -m pip install -U matplotlib && pip install --upgrade setuptools
+RUN $CONDAENV/pip install mmcv==1.4.0 timm scipy
 WORKDIR /home/$USER_NAME
-#RUN git clone https://github.com/SwinTransformer/Video-Swin-Transformer
-#WORKDIR /home/$USER_NAME/Video-Swin-Transformer
-#RUN $ACTIVATE && python setup.py develop
-#RUN . .bashrc
 RUN mkdir -p .aws

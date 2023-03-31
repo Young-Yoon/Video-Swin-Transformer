@@ -75,13 +75,15 @@ ENV PATH=$condapath/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbi
 
 ARG ENV_NAME=mmlab
 RUN conda create -y -n $ENV_NAME python=3.7
-ENV ACTIVATE="$condapath/bin/activate $ENV_NAME"
+ENV CONDAENV="$condapath/envs/$ENV_NAME/bin"
+#ENV ACTIVATE="$condapath/bin/activate $ENV_NAME"
 RUN conda init bash && echo "conda deactivate && conda activate $ENV_NAME" >> /home/$USER_NAME/.bashrc
 
 RUN conda install -n $ENV_NAME -y -c pytorch pytorch==1.7.0 torchvision==0.8.0 cudatoolkit=11.0 pillow=6.1
 RUN conda install -n $ENV_NAME -y -c "conda-forge/label/cf202003" nvidia-apex
-RUN $ACTIVATE && python -m pip install -U pip && python -m pip install -U matplotlib && pip install --upgrade setuptools
-RUN $ACTIVATE && pip install mmcv==1.4.0 timm scipy
+RUN conda install -n $ENV_NAME -y pip
+RUN $CONDAENV/python -m pip install -U pip && python -m pip install -U matplotlib && pip install --upgrade setuptools
+RUN $CONDAENV/pip install mmcv==1.4.0 timm scipy
 
 WORKDIR /home/$USER_NAME
 #RUN git clone https://github.com/SwinTransformer/Video-Swin-Transformer

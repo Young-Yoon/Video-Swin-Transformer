@@ -1,3 +1,7 @@
+###  Setup and quick test
+1. Set `.aws/credentials`
+2. `make test`
+
 # Video Swin Transformer
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/video-swin-transformer/action-classification-on-kinetics-400)](https://paperswithcode.com/sota/action-classification-on-kinetics-400?p=video-swin-transformer)
@@ -49,10 +53,6 @@ This repo is the official implementation of ["Video Swin Transformer"](https://a
 - Access code for baidu is `swin`.
 
 ## Usage
-
-###  Setup and quick test
-1. Set `.aws/credentials`
-2. `make test`
 
 ###  Installation
 
