@@ -1,14 +1,14 @@
 #!/bin/bash
 
 dhome="$HOME"
-droot=$HOME/dataroot
+droot=$HOME
 dconda=$HOME  # $droot
-dpath="$dhome/data"
+dpath="$dhome/data"   # path to dataset
 dname=kinetics400
-dname2=xdviolence
 dgz=k400models.tar.gz
+dname2=xd-violence
 dgz2=xdv_test12.tar.gz
-dsrc=Video-Swin-Transformer
+dsrc=Video-Swin-Transformer   # repo name
 
 while getopts d:c: flag
 do
@@ -22,11 +22,11 @@ aws s3 ls || exit 1
 
 if [ "$odata" == "y" ]; then
 echo prepare validation dataset and models
-[[ -e "$dpath" ]] || mkdir -p $dpath
+[[ -e "$dpath/$dname2" ]] || mkdir -p $dpath/$dname2
+aws s3 cp s3://$dname2/$dgz2 $dpath
+tar xvzf $dpath/$dgz2 -C $dpath/$dname2
 aws s3 cp s3://$dname/$dgz $dpath 
 tar xvzf $dpath/$dgz -C $dpath/
-aws s3 cp s3://$dname2/$dgz2 $dpath
-tar xvzf $dpath/$dgz2 -C $dpath/$dname2/
 rm $dpath/$dgz $dpath/$dgz2
 
 echo link dataset

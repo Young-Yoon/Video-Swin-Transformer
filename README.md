@@ -50,6 +50,10 @@ This repo is the official implementation of ["Video Swin Transformer"](https://a
 
 ## Usage
 
+###  Setup and quick test
+1. Set `.aws/credentials`
+2. `make test`
+
 ###  Installation
 
 Please refer to [install.md](docs/install.md) for installation.
