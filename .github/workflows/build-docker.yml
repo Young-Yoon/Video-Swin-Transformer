@@ -17,12 +17,12 @@ jobs:
     runs-on: [ self-hosted, generic-linux ]
     strategy:
       matrix:
-        cuda: [ 11.0 ]
+        cuda: [ '11.0' ]
         target: [ docker, mlp-notebook ]
         include:
           - target: docker
             image_name: swin-docker
-          - target: mlp_nb
+          - target: mlp-notebook
             image_name: swin-mlp-notebook
     steps:
       - name: Ensure a clean workspace
