@@ -1,5 +1,6 @@
 FROM nvidia/cuda:11.0.3-cudnn8-devel-ubuntu18.04
 
+SHELL ["/bin/bash", "-c"]
 # Labels for the docker
 LABEL description="This docker has pytorch 1.7.1 in python37 with cuda 11.0.3, and cudnn 8.0." \
       tag="pytorch1.7.1-py37-cuda11.0-openmpi-mmcv-apex-timm" \
@@ -15,86 +16,76 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 ENV LD_LIBRARY_PATH=/usr/local/cuda/extras/CUPTI/lib64:/usr/local/nvidia/lib:/usr/local/nvidia/lib64
 
-ENV NCCL_DEBUG=INFO
-
-ENV HOROVOD_GPU_ALLREDUCE=NCCL
-
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libmlx4-1 \
-    libmlx5-1 \
-    librdmacm1 \
-    libibverbs1 \
-    libmthca1 \
-    libdapl2 \
-    dapl2-utils openssh-client \
-    openssh-server \
-    iproute2 && \
-    apt-get install -y \
-    build-essential \
-    bzip2 \
+    ca-certificates \
+    ccache \
+    cmake \
+    curl \
     git \
-    wget \
-    unzip \
+    libfreetype6-dev \
+    libhdf5-serial-dev \
+    libzmq3-dev \
     libjpeg-dev \
     libpng-dev \
-    ca-certificates \
-    libopenblas-dev \
-    libopencv-dev \
-    libyaml-dev \
-    cpio && \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgl1 \
+    pkg-config \
+    software-properties-common \
+    ssh \
+    sudo \
+    unzip \
+    wget \
+    vim \
+    awscli s3fs && \
     apt-get clean -y && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
-RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN apt update && apt upgrade -y && apt install s3fs awscli
+#pip install --upgrade pip
+#pip install awscli
 
-RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
-    wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/anaconda.sh && \
-    sh ~/anaconda.sh -b -p /opt/conda && \
+RUN ln -s /usr/local/cuda/lib64/stubs/libcuda.so /usr/local/cuda/lib64/stubs/libcuda.so.1 && \
+    echo "/usr/local/cuda/lib64/stubs" > /etc/ld.so.conf.d/z-cuda-stubs.conf && \
+    ldconfig
+
+# ssh
+RUN echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config && \
+    echo "PermitEmptyPasswords yes" >> /etc/ssh/sshd_config && \
+    echo "UsePAM no" >> /etc/ssh/sshd_config
+
+# add user
+ARG UID=1000
+ARG USER_NAME=avc
+RUN adduser $USER_NAME -u $UID --quiet --gecos "" --disabled-password && \
+    echo "$USER_NAME ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/$USER_NAME && \
+    chmod 0440 /etc/sudoers.d/$USER_NAME
+
+ARG condapath="/home/$USER_NAME/conda"
+RUN echo 'export PATH=$condapath/bin:$PATH' > /etc/profile.d/conda.sh
+
+USER $USER_NAME
+
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/anaconda.sh && \
+    bash ~/anaconda.sh -b -p $condapath && \
     rm ~/anaconda.sh
 
-ENV PATH=/opt/conda/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV PATH=$condapath/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-RUN conda install -y python=3.7 numpy pyyaml scipy ipython mkl scikit-learn matplotlib pandas setuptools Cython h5py graphviz
+ARG ENV_NAME=mmlab
+RUN conda create -y -n $ENV_NAME python=3.7
+ENV ACTIVATE="$condapath/bin/activate $ENV_NAME"
+RUN conda init bash && echo "conda deactivate && conda activate $ENV_NAME" >> /home/$USER_NAME/.bashrc
 
-RUN conda clean -ya
+RUN conda install -n $ENV_NAME -y -c pytorch pytorch==1.7.0 torchvision==0.8.0 cudatoolkit=11.0 pillow=6.1
+RUN conda install -n $ENV_NAME -y -c "conda-forge/label/cf202003" nvidia-apex
+RUN $ACTIVATE && python -m pip install -U pip && python -m pip install -U matplotlib && pip install --upgrade setuptools
+RUN $ACTIVATE && pip install mmcv==1.4.0 timm scipy
 
-RUN conda install -y mkl-include cmake cffi typing cython
-
-RUN conda install -y -c mingfeima mkldnn
-
-ENV OPENMPI_VERSION=3.1.2
-
-RUN mkdir /tmp/openmpi && \
-    cd /tmp/openmpi && \
-    wget https://download.open-mpi.org/release/open-mpi/v3.1/openmpi-${OPENMPI_VERSION}.tar.gz && \
-    tar zxf openmpi-${OPENMPI_VERSION}.tar.gz && \
-    cd openmpi-${OPENMPI_VERSION} && \
-    ./configure --enable-orterun-prefix-by-default && \
-    make -j $(nproc) all && \
-    make install && \
-    ldconfig && \
-    rm -rf /tmp/openmpi
-
-RUN conda install pytorch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 cudatoolkit=11.0 -c pytorch
-
-RUN export CUDA_HOME="/usr/local/cuda"
-
-RUN pip install terminaltables
-
-RUN pip install future tensorboard
-
-RUN git clone https://github.com/NVIDIA/apex && \
-    cd apex && \
-    pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" ./ && \
-    cd ..
-
-RUN pip install timm==0.3.2
-RUN conda config --add channels conda-forge
-RUN conda install -y imgaug
-
-RUN pip install mmcv-full==1.3.3 -f https://download.openmmlab.com/mmcv/dist/cu110/torch1.7.1/index.html
-
-RUN pip install "git+https://github.com/open-mmlab/cocoapi.git#subdirectory=pycocotools"
-RUN apt-get update && apt-get install -y --no-install-recommends net-tools
-
-WORKDIR /root
+WORKDIR /home/$USER_NAME
+#RUN git clone https://github.com/SwinTransformer/Video-Swin-Transformer
+#WORKDIR /home/$USER_NAME/Video-Swin-Transformer
+#RUN $ACTIVATE && python setup.py develop
+RUN . .bashrc
+RUN mkdir -p .aws
