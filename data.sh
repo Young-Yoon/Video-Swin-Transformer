@@ -8,7 +8,7 @@ dname=kinetics400
 dgz=k400models.tar.gz
 dname2=xd-violence
 dgz2=xdv_test12.tar.gz
-dsrc=Video-Swin-Transformer   # repo name
+dsrc=${PWD##*/}  #Video-Swin-Transformer # repo name
 
 while getopts d:c: flag
 do

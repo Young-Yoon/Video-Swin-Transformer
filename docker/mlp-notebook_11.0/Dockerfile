@@ -29,8 +29,11 @@ RUN echo "conda deactivate && conda activate $ENV_NAME" >> /home/$USER_NAME/.bas
 
 RUN conda install -n $ENV_NAME -y -c pytorch pytorch==1.7.0 torchvision==0.8.0 cudatoolkit=11.0 pillow=6.1
 RUN conda install -n $ENV_NAME -y -c "conda-forge/label/cf202003" nvidia-apex
+RUN conda install -n $ENV_NAME -y -c anaconda ipykernel==6.15.2
 RUN conda install -n $ENV_NAME -y pip
-RUN $CONDAENV/python -m pip install -U pip && python -m pip install -U matplotlib && pip install --upgrade setuptools
-RUN $CONDAENV/pip install mmcv==1.4.0 timm scipy
+RUN $CONDAENV/pip install mmcv==1.4.0 timm==0.6.12 scipy==1.7.3 matplotlib==3.5.3
+RUN $CONDAENV/python -m ipykernel install --user --name=$ENV_NAME
+#pip install -U pip && python -m pip install -U matplotlib==3.5.3 && pip install --upgrade setuptools
+
 WORKDIR /home/$USER_NAME
 RUN mkdir -p .aws
