@@ -10,29 +10,35 @@ dname2=xd-violence
 dgz2=xdv_test12.tar.gz
 dsrc=${PWD##*/}  #Video-Swin-Transformer # repo name
 
-while getopts d:c: flag
+while getopts c: flag
 do
     case "${flag}" in
-        d) odata=${OPTARG};;
         c) oconda=${OPTARG};;
     esac
 done
 
 aws s3 ls || exit 1
 
-if [ "$odata" == "y" ]; then
-echo prepare validation dataset and models
+if [ ! -e "$dpath/$dname/val/hyt69aadDDU_000120_000130.mp4" ]; then
+echo prepare $dname validation dataset and models
+aws s3 cp s3://$dname/$dgz $dpath
+pushd $dpath
+tar xvzf $dgz -C . && rm $dgz
+popd
+fi
+
+if [ ! -e "$dpath/$dname2/test12/v=yDqThVpu1AM__#1_label_B4-0-0.mp4" ]; then
+echo prepare $dname2 test dataset
 [[ -e "$dpath/$dname2" ]] || mkdir -p $dpath/$dname2
 aws s3 cp s3://$dname2/$dgz2 $dpath
-tar xvzf $dpath/$dgz2 -C $dpath/$dname2
-aws s3 cp s3://$dname/$dgz $dpath 
-tar xvzf $dpath/$dgz -C $dpath/
-rm $dpath/$dgz $dpath/$dgz2
+pushd $dpath
+tar xvzf $dgz2 -C $dname2 && rm $dgz2
+popd
+fi
 
 echo link dataset
 [[ -e "$droot/$dsrc/data" ]] || ln -s $dpath $droot/$dsrc/data
 ls -al $droot/$dsrc/data
-fi
 
 if [ "$oconda" == "y" ] || [[ "${CONDA_DEFAULT_ENV}" != "mmlab" ]]; then   # "${CONDA_PREFIX##*/}"
 	# source $dconda/anaconda3/bin/activate mmlab
@@ -45,8 +51,8 @@ fi
 echo current conda env: "${CONDA_DEFAULT_ENV}"
 pushd $droot/$dsrc
 
+echo "checking setup mmaction2"
 ommact=`echo $(conda list | grep mmaction2 | wc -l) | sed -e 's/^[[:space:]]*//'`
-echo $ommact
 [[ "$ommact" != "1" ]] && python setup.py develop
 
 for mdl in tiny ; do # small base; do

@@ -1,2 +1,2 @@
 test:
-	bash data.sh -d y
+	bash setup_check.sh
