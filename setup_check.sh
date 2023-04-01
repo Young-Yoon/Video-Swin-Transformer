@@ -9,6 +9,7 @@ dgz=k400models.tar.gz
 dname2=xd-violence
 dgz2=xdv_test12.tar.gz
 dsrc=${PWD##*/}  #Video-Swin-Transformer # repo name
+envname=mmlab
 
 while getopts c: flag
 do
@@ -40,11 +41,11 @@ echo link dataset
 [[ -e "$droot/$dsrc/data" ]] || ln -s $dpath $droot/$dsrc/data
 ls -al $droot/$dsrc/data
 
-if [ "$oconda" == "y" ] || [[ "${CONDA_DEFAULT_ENV}" != "mmlab" ]]; then   # "${CONDA_PREFIX##*/}"
+if [ "$oconda" == "y" ] || [[ "${CONDA_DEFAULT_ENV}" != "${envname}" ]]; then   # "${CONDA_PREFIX##*/}"
 	# source $dconda/anaconda3/bin/activate mmlab
 	source ~/.bashrc
 	conda deactivate
-	conda activate mmlab
+	conda activate $envname
 	echo changed to conda env: ${CONDA_DEFAULT_ENV}
 fi
 
@@ -55,6 +56,10 @@ echo "checking setup mmaction2"
 ommact=`echo $(conda list | grep mmaction2 | wc -l) | sed -e 's/^[[:space:]]*//'`
 [[ "$ommact" != "1" ]] && python setup.py develop
 
+echo "setup jupyter ipykernel"
+[[ -e $HOME/.local/share/jupyter/kernels/$envname ]] || python -m ipykernel install --user --name=$envname
+
+echo "inferencing the pretrained model on $dname"
 for mdl in tiny ; do # small base; do
 	[[ "$mdl" == "base" ]] && trsz="1k 22k" || trsz="1k"
 	for tr in $trsz; do 
